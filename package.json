@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "flow-bin": "^0.53.1",
     "grommet": "^1.7.0",
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",
@@ -17,6 +16,9 @@
     "react-scripts": "^1.0.11",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "flow-bin": "^0.53.1",
   },
   "scripts": {
     "start": "react-scripts start",
