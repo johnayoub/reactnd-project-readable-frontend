@@ -18,9 +18,11 @@ class Post extends Component {
 }
 
 Post.PropTypes = {
-    author: PropTypes.string,
-    commentsCount: PropTypes.number,
-    createdOn: PropTypes.object
+    post: PropTypes.shape({
+        author: PropTypes.string,
+        commentsCount: PropTypes.number,
+        createdOn: PropTypes.object
+    })
 };
 
 export default Post;
