@@ -1,23 +1,19 @@
 import { authHeader, baseUrl } from "./apiCommon";
 
-export function fetchPosts(postId = '') {
-    let postPromise;
+export function fetchPosts(category = '') {
+    const url = category ? `${baseUrl}/${category}/posts` : `${baseUrl}/posts`;
 
-    if (postId) {
-        postPromise = fetch(`${baseUrl}/posts/${postId}`, {
-            headers: {
-                ...authHeader
-            }
-        });
-    }
-    else {
-        postPromise = fetch(`${baseUrl}/posts`, {
-            headers: {
-                ...authHeader
-            }
-        });
-    }
+    return fetch(url, {
+        headers: {
+            ...authHeader
+        }
+    }).then(res => res.json());
+}
 
-    return postPromise
-        .then(res => res.json());
+export function fetchPost(postId) {
+    return fetch(`${baseUrl}/posts/${postId}`, {
+        headers: {
+            ...authHeader
+        }
+    }).then(res => res.json());
 }
