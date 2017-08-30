@@ -1,17 +1,40 @@
 import { combineReducers } from 'redux';
-import { RECEIVE_POSTS } from '../actions';
+import * as actions from '../actions';
+
+const UI_INITIAL_STATE = {
+    sortField: 'voteScore',
+    sortDirection: 'asc'
+};
 
 function posts(state = [], action) {
     switch (action.type) {
-        case RECEIVE_POSTS:
+        case actions.RECEIVE_POSTS:
             return action.posts;
         default:
             return state;
     }
 }
 
+function ui(state = UI_INITIAL_STATE, action) {
+    switch(action.type) {
+        case actions.SET_SORT_FIELD:
+            return {
+                ...state,
+                sortField: action.field
+            };
+        case actions.SET_SORT_DIRECTION:
+            return {
+                ...state,
+                sortDirection: action.direction
+            };
+        default:
+            return state;
+    }
+}
+
 const reducer = combineReducers({
-    posts
+    posts,
+    ui
 });
 
 export default reducer;

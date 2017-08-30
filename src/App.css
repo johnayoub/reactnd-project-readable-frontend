@@ -1,3 +1,23 @@
 .app-body {
     margin: 0 24px;
 }
+
+.view-controls-container {
+    margin: 10px 0 10px 0;
+}
+
+.view-controls-container:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.view-controls {
+    display: inline-block;
+    margin: 0 0 0 10px;
+    float: right;
+}
+
+.view-controls.view-controls-sort > div {
+    margin: 0 0 0 20px;
+}
