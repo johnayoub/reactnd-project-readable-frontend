@@ -10,7 +10,7 @@ class Post extends Component {
             <h1 className="mdc-typography--title">{post.title}</h1>
             <div className="mdc-typography--caption">
                 posted <Moment date={post.timestamp} format="MMM DD 'YY"/> @
-                {' '}<Moment date={post.timestamp} format="LT"/> {' '}
+                {' '}<Moment date={post.createdOn} format="LT"/> {' '}
                 by {post.author}, {post.commentsCount} replied
             </div>
         </div>);
