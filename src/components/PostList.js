@@ -10,7 +10,7 @@ export default class PostList extends React.Component {
 
         return (
             <div className="posts">
-                {posts}
+                {posts.length === 0 ? ':( nothing to show here' : posts}
             </div>
         );
     }
