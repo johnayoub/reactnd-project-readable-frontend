@@ -9,7 +9,7 @@ import sortBy from 'sort-by';
 
 class CategoryView extends Component {
     componentDidMount() {
-        this.props.fetchPosts();
+        this.props.loadContent(this.props.match.params.category);
     }
 
     handleSortField = (event, index, value) => {
@@ -20,10 +20,28 @@ class CategoryView extends Component {
         this.props.setSortDirection(value);
     };
 
+    handleCategory = (event, index, value) => {
+        this.props.history.push(`/${value}`);
+    };
+
     render() {
+        const categories = this.props.categories.map(category => {
+            return <MenuItem key={category.path} value={category.path}
+                             primaryText={category.name}/>;
+        });
+
+        const { category } = this.props.match.params;
+
         return (
             <div className="view view-category">
                 <div className="view-controls-container">
+                    <div className="view-controls view-controls-categories">
+                        <SelectField value={category || ''} floatingLabelText="Category"
+                                    onChange={this.handleCategory}>
+                            <MenuItem value={''} primaryText="" />
+                            {categories}
+                        </SelectField>
+                    </div>
                     <div className="view-controls view-controls-sort">
                         <SelectField value={this.props.sortField} floatingLabelText="Sort by"
                                      onChange={this.handleSortField}>
@@ -43,15 +61,22 @@ class CategoryView extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    const posts = state.posts.map(post => ({
+const mapStateToProps = (state, props) => {
+    const { match } = props;
+
+    let posts = state.posts.map(post => ({
         ...post,
         createdOn: new Date(post.timestamp)
     }));
 
+    if (match.params.category) {
+        posts = posts.filter(post => post.category === match.params.category);
+    }
+
     posts.sort(sortBy(`${state.ui.sortDirection === 'asc' ? '' : '-'}${state.ui.sortField}`));
 
     return {
+        categories: [...state.categories],
         posts,
         sortField: state.ui.sortField,
         sortDirection: state.ui.sortDirection
@@ -59,7 +84,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    fetchPosts: () => dispatch(actions.fetchPosts()),
+    loadContent: (category) => dispatch(actions.loadCategoryViewContent(category)),
     setSortField: (field) => dispatch(actions.setSortField(field)),
     setSortDirection: (direction) => dispatch(actions.setSortDirection(direction))
 });

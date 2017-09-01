@@ -15,6 +15,15 @@ function posts(state = [], action) {
     }
 }
 
+function categories(state = [], action) {
+    switch (action.type) {
+        case actions.RECEIVE_CATEGORIES:
+            return action.categories;
+        default:
+            return state;
+    }
+}
+
 function ui(state = UI_INITIAL_STATE, action) {
     switch(action.type) {
         case actions.SET_SORT_FIELD:
@@ -34,6 +43,7 @@ function ui(state = UI_INITIAL_STATE, action) {
 
 const reducer = combineReducers({
     posts,
+    categories,
     ui
 });
 
