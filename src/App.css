@@ -1,5 +1,6 @@
 .app-body {
     margin: 0 24px;
+    padding: 20px 0 0 0;
 }
 
 .pull-right {
@@ -11,7 +12,7 @@
 }
 
 .view-controls-container {
-    margin: 10px 0 10px 0;
+    margin: 0px 0 10px 0;
 }
 
 .view-controls-container:after {
