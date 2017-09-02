@@ -11,7 +11,9 @@ function posts(state = [], action) {
         case actions.RECEIVE_POSTS:
             return action.posts;
         case actions.UPDATE_POST_VOTE_SCORE:
-            return [...state.filter(post => post.id !== action.post.id), action.post];
+            const currentPost = state.filter(post => post.id === action.post.id)[0];
+            // merge the posts since the new one doesn't have the commentsCount
+            return [...state.filter(post => post.id !== action.post.id), Object.assign(currentPost, action.post)];
         default:
             return state;
     }
