@@ -10,6 +10,8 @@ function posts(state = [], action) {
     switch (action.type) {
         case actions.RECEIVE_POSTS:
             return action.posts;
+        case actions.UPDATE_POST_VOTE_SCORE:
+            return [...state.filter(post => post.id !== action.post.id), action.post];
         default:
             return state;
     }

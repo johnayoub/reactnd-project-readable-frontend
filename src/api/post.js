@@ -10,10 +10,13 @@ export function fetchPosts(category = '') {
     }).then(res => res.json());
 }
 
-export function fetchPost(postId) {
+export function updateVoteScore(postId, voteOption) {
     return fetch(`${baseUrl}/posts/${postId}`, {
+        method: 'POST',
         headers: {
-            ...authHeader
-        }
+            ...authHeader,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({option: voteOption})
     }).then(res => res.json());
 }

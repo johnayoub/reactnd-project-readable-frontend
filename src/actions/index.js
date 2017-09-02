@@ -6,13 +6,14 @@ export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
 export const SET_SORT_FIELD = 'SET_SORT_FIELD';
 export const SET_SORT_DIRECTION = 'SET_SORT_DIRECTION';
+export const UPDATE_POST_VOTE_SCORE = 'UPDATE_POST_VOTE_SCORE';
 
-export const receivePosts = posts => ({
+const receivePosts = posts => ({
     type: RECEIVE_POSTS,
     posts
 });
 
-export const receiveCategories = categories => ({
+const receiveCategories = categories => ({
     type: RECEIVE_CATEGORIES,
     categories
 });
@@ -33,6 +34,21 @@ export const loadCategoryViewContent = () => dispatch => {
             dispatch(receivePosts(result[0]));
             dispatch(receiveCategories(result[1]));
         });
+};
+
+const updatePostScore = post => ({
+    type: UPDATE_POST_VOTE_SCORE,
+    post: post
+});
+
+export const upVotePost = (post) => dispatch => {
+    return PostsAPI.updateVoteScore(post.id, 'upVote')
+        .then(updatedPost => dispatch(updatePostScore(updatedPost)));
+};
+
+export const downVotePost = (post) => dispatch => {
+    return PostsAPI.updateVoteScore(post.id, 'downVote')
+        .then(updatedPost => dispatch(updatePostScore(updatedPost)));
 };
 
 const fetchPosts = () => {

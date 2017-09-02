@@ -36,3 +36,12 @@
 .view-controls.view-controls-sort > div {
     margin: 0 0 0 20px;
 }
+
+.voting-button {
+    opacity: 0.5;
+    vertical-align: middle;
+}
+
+.voting-button:hover {
+    opacity: 1;
+}
