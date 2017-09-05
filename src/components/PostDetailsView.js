@@ -41,7 +41,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchPost: (postId) => dispatch(actions.fetchPost(postId))
+        fetchPost: (postId) => dispatch(actions.loadPostDetailsViewContent(postId))
     };
 };
 

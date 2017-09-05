@@ -76,7 +76,7 @@ export const downVoteComment = (comment) => dispatch => {
         .then(updatedComment => dispatch(updateCommentScore(updatedComment)));
 };
 
-export const fetchPost = (postId) => dispatch => {
+export const loadPostDetailsViewContent = (postId) => dispatch => {
   return Promise.all([PostsAPI.fetchPost(postId), CommentsAPI.fetchComments(postId)])
       .then(result => {
           dispatch(receiveCurrentPost(result[0], result[1]));
