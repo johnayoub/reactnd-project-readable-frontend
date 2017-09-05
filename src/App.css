@@ -84,3 +84,7 @@
 .comment .mdc-typography--body1 {
     margin-bottom: 5px;
 }
+
+.view-loading {
+    display: none;
+}

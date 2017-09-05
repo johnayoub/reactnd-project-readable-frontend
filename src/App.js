@@ -8,9 +8,23 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import '@material/typography/dist/mdc.typography.css';
 import './App.css';
 import { withRouter } from 'react-router';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 class App extends Component {
     render() {
+        const {viewLoading} = this.props;
+
+        const style = {
+            container: {
+                position: 'relative',
+                textAlign: 'center'
+            },
+            refresh: {
+                display: 'inline-block',
+                position: 'relative'
+            }
+        };
+
         return (
             <MuiThemeProvider>
                 <div className="app-root">
@@ -18,10 +32,21 @@ class App extends Component {
                         <Header/>
                     </div>
                     <div className="app-body">
-                        <Switch>
-                            <Route exact path="/:category/:postId" component={PostDetails}/>
-                            <Route exact path="/:category?" component={CategoryView}/>
-                        </Switch>
+                        <div style={style.container}>
+                            <RefreshIndicator
+                                size={40}
+                                left={10}
+                                top={0}
+                                status={viewLoading ? "loading" : "hide"}
+                                style={style.refresh}
+                            />
+                        </div>
+                        <div className={viewLoading ? "view-loading" : ""}>
+                            <Switch>
+                                <Route exact path="/:category/:postId" component={PostDetails}/>
+                                <Route exact path="/:category?" component={CategoryView}/>
+                            </Switch>
+                        </div>
                     </div>
                 </div>
             </MuiThemeProvider>
@@ -29,4 +54,10 @@ class App extends Component {
     }
 }
 
-export default withRouter(connect()(App));
+const mapStateToProps = state => {
+    return {
+        viewLoading: state.ui.viewLoading
+    };
+};
+
+export default withRouter(connect(mapStateToProps)(App));

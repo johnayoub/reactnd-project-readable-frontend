@@ -3,7 +3,8 @@ import * as actions from '../actions';
 
 const UI_INITIAL_STATE = {
     sortField: 'voteScore',
-    sortDirection: 'asc'
+    sortDirection: 'asc',
+    viewLoading: false
 };
 
 function updateItemVoteScore(item, voteScore) {
@@ -80,6 +81,11 @@ function ui(state = UI_INITIAL_STATE, action) {
             return {
                 ...state,
                 sortDirection: action.direction
+            };
+        case actions.SET_VIEW_LOADING:
+            return {
+                ...state,
+                viewLoading: action.viewLoading
             };
         default:
             return state;
