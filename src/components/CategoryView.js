@@ -66,8 +66,7 @@ const mapStateToProps = (state, props) => {
     const sortField = state.ui.postSortField,
           sortDirection = state.ui.postSortDirection;
 
-    // to - create a new array
-    let posts = state.posts;
+    let posts = [...state.posts];
 
     if (match.params.category) {
         posts = posts.filter(post => post.category === match.params.category);
