@@ -5,8 +5,10 @@ import * as CategoriesAPI from '../api/category';
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
 export const RECEIVE_CURRENT_POST = 'RECEIVE_CURRENT_POST';
-export const SET_SORT_FIELD = 'SET_SORT_FIELD';
-export const SET_SORT_DIRECTION = 'SET_SORT_DIRECTION';
+export const SET_POST_SORT_FIELD = 'SET_POST_SORT_FIELD';
+export const SET_POST_SORT_DIRECTION = 'SET_POST_SORT_DIRECTION';
+export const SET_COMMENT_SORT_FIELD = 'SET_COMMENT_SORT_FIELD';
+export const SET_COMMENT_SORT_DIRECTION = 'SET_COMMENT_SORT_DIRECTION';
 export const SET_VIEW_LOADING = 'SET_VIEW_LOADING';
 export const UPDATE_POST_VOTE_SCORE = 'UPDATE_POST_VOTE_SCORE';
 export const UPDATE_COMMENT_VOTE_SCORE = 'UPDATE_COMMENT_VOTE_SCORE';
@@ -34,13 +36,23 @@ const setViewLoading = viewLoading => ({
     viewLoading
 });
 
-export const setSortField = field => ({
-    type: SET_SORT_FIELD,
+export const setPostSortField = field => ({
+    type: SET_POST_SORT_FIELD,
     field
 });
 
-export const setSortDirection = direction => ({
-    type: SET_SORT_DIRECTION,
+export const setPostSortDirection = direction => ({
+    type: SET_POST_SORT_DIRECTION,
+    direction
+});
+
+export const setCommentSortField = field => ({
+    type: SET_COMMENT_SORT_FIELD,
+    field
+});
+
+export const setCommentSortDirection = direction => ({
+    type: SET_COMMENT_SORT_DIRECTION,
     direction
 });
 

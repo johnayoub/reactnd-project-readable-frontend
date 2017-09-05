@@ -2,8 +2,10 @@ import { combineReducers } from 'redux';
 import * as actions from '../actions';
 
 const UI_INITIAL_STATE = {
-    sortField: 'voteScore',
-    sortDirection: 'asc',
+    postSortField: 'voteScore',
+    postSortDirection: 'asc',
+    commentSortField: 'voteScore',
+    commentSortDirection: 'asc',
     viewLoading: false
 };
 
@@ -72,15 +74,25 @@ function categories(state = [], action) {
 
 function ui(state = UI_INITIAL_STATE, action) {
     switch(action.type) {
-        case actions.SET_SORT_FIELD:
+        case actions.SET_POST_SORT_FIELD:
             return {
                 ...state,
-                sortField: action.field
+                postSortField: action.field
             };
-        case actions.SET_SORT_DIRECTION:
+        case actions.SET_POST_SORT_DIRECTION:
             return {
                 ...state,
-                sortDirection: action.direction
+                postSortDirection: action.direction
+            };
+        case actions.SET_COMMENT_SORT_FIELD:
+            return {
+                ...state,
+                commentSortField: action.field
+            };
+        case actions.SET_COMMENT_SORT_DIRECTION:
+            return {
+                ...state,
+                commentSortDirection: action.direction
             };
         case actions.SET_VIEW_LOADING:
             return {

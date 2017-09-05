@@ -46,7 +46,7 @@ class CategoryView extends Component {
                         <SelectField value={this.props.sortField} floatingLabelText="Sort by"
                                      onChange={this.handleSortField}>
                             <MenuItem value="voteScore" primaryText="Vote score"/>
-                            <MenuItem value="createdOn" primaryText="Created on"/>
+                            <MenuItem value="timestamp" primaryText="Created on"/>
                         </SelectField>
                         <SelectField value={this.props.sortDirection} floatingLabelText="Sort direction"
                                      onChange={this.handleSortDirection}>
@@ -63,27 +63,30 @@ class CategoryView extends Component {
 
 const mapStateToProps = (state, props) => {
     const { match } = props;
+    const sortField = state.ui.postSortField,
+          sortDirection = state.ui.postSortDirection;
 
+    // to - create a new array
     let posts = state.posts;
 
     if (match.params.category) {
         posts = posts.filter(post => post.category === match.params.category);
     }
 
-    posts.sort(sortBy(`${state.ui.sortDirection === 'asc' ? '' : '-'}${state.ui.sortField}`));
+    posts.sort(sortBy(`${sortDirection === 'asc' ? '' : '-'}${sortField}`));
 
     return {
         categories: [...state.categories],
         posts,
-        sortField: state.ui.sortField,
-        sortDirection: state.ui.sortDirection
+        sortField: sortField,
+        sortDirection: sortDirection
     };
 };
 
 const mapDispatchToProps = dispatch => ({
     loadContent: (category) => dispatch(actions.loadCategoryViewContent(category)),
-    setSortField: (field) => dispatch(actions.setSortField(field)),
-    setSortDirection: (direction) => dispatch(actions.setSortDirection(direction))
+    setSortField: (field) => dispatch(actions.setPostSortField(field)),
+    setSortDirection: (direction) => dispatch(actions.setPostSortDirection(direction))
 });
 
 CategoryView.PropTypes = {
