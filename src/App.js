@@ -17,7 +17,8 @@ class App extends Component {
         const style = {
             container: {
                 position: 'relative',
-                textAlign: 'center'
+                textAlign: 'center',
+                display: viewLoading ? 'block' : 'none'
             },
             refresh: {
                 display: 'inline-block',
