@@ -11,6 +11,20 @@
     float: right;
 }
 
+.post-category-label {
+    color: #fff;
+    background-color: #868e96;
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+}
+
 .view-controls-container {
     margin: 0 0 10px 0;
 }
@@ -45,4 +59,28 @@
 
 .voting-button:hover {
     opacity: 1;
+}
+
+.posts .post {
+    margin-bottom: 25px;
+}
+
+.post-details .mdc-typography--title, .post .mdc-typography--title {
+    margin-bottom: 5px;
+}
+
+.post-details .mdc-typography--body1 {
+    margin-top: 40px;
+}
+
+.post-comments .comment {
+    margin-bottom: 20px;
+}
+
+.post-comments {
+    margin-top: 30px;
+}
+
+.comment .mdc-typography--body1 {
+    margin-bottom: 5px;
 }

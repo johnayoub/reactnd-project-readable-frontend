@@ -20,3 +20,11 @@ export function updateVoteScore(postId, voteOption) {
         body: JSON.stringify({option: voteOption})
     }).then(res => res.json());
 }
+
+export function fetchPost(postId) {
+    return fetch(`${baseUrl}/posts/${postId}`, {
+        headers: {
+            ...authHeader
+        }
+    }).then(res => res.json());
+}

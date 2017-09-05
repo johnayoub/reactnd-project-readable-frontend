@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './components/Header';
 import CategoryView from "./components/CategoryView";
+import PostDetails from './components/PostDetailsView';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -18,6 +19,7 @@ class App extends Component {
                     </div>
                     <div className="app-body">
                         <Switch>
+                            <Route exact path="/:category/:postId" component={PostDetails}/>
                             <Route exact path="/:category?" component={CategoryView}/>
                         </Switch>
                     </div>

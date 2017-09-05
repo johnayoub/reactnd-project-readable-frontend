@@ -64,10 +64,7 @@ class CategoryView extends Component {
 const mapStateToProps = (state, props) => {
     const { match } = props;
 
-    let posts = state.posts.map(post => ({
-        ...post,
-        createdOn: new Date(post.timestamp)
-    }));
+    let posts = state.posts;
 
     if (match.params.category) {
         posts = posts.filter(post => post.category === match.params.category);

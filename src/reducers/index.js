@@ -6,14 +6,55 @@ const UI_INITIAL_STATE = {
     sortDirection: 'asc'
 };
 
+function updateItemVoteScore(item, voteScore) {
+    return {
+        ...item,
+        voteScore
+    };
+}
+
 function posts(state = [], action) {
     switch (action.type) {
         case actions.RECEIVE_POSTS:
             return action.posts;
         case actions.UPDATE_POST_VOTE_SCORE:
-            const currentPost = state.filter(post => post.id === action.post.id)[0];
-            // merge the posts since the new one doesn't have the commentsCount
-            return [...state.filter(post => post.id !== action.post.id), Object.assign(currentPost, action.post)];
+            const postToUpdate = state.filter(post => post.id === action.post.id)[0];
+
+            if (!postToUpdate) {
+                return state;
+            }
+
+            return [...state.filter(post => post.id !== action.post.id),
+                updateItemVoteScore(postToUpdate, action.post.voteScore)];
+        default:
+            return state;
+    }
+}
+
+function currentPost(state = {post: {}, comments: []}, action) {
+    switch (action.type) {
+        case actions.RECEIVE_CURRENT_POST:
+            return action.currentPost;
+        case actions.UPDATE_POST_VOTE_SCORE:
+            if (state.post.id !== action.post.id) {
+                return state;
+            }
+
+            return {
+                ...state,
+                post: updateItemVoteScore(state.post, action.post.voteScore)
+            };
+        case actions.UPDATE_COMMENT_VOTE_SCORE:
+            return {
+                ...state,
+                comments: state.comments.map(comment => {
+                    if (comment.id !== action.comment.id) {
+                        return comment;
+                    }
+
+                    return updateItemVoteScore(comment, action.comment.voteScore);
+                })
+            };
         default:
             return state;
     }
@@ -47,6 +88,7 @@ function ui(state = UI_INITIAL_STATE, action) {
 
 const reducer = combineReducers({
     posts,
+    currentPost,
     categories,
     ui
 });

@@ -7,3 +7,14 @@ export function fetchComments(postId) {
         }
     }).then(res => res.json());
 }
+
+export function updateVoteScore(commentId, voteOption) {
+    return fetch(`${baseUrl}/comments/${commentId}`, {
+        method: 'POST',
+        headers: {
+            ...authHeader,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({option: voteOption})
+    }).then(res => res.json());
+}
