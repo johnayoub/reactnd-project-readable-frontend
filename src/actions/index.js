@@ -1,21 +1,30 @@
 import * as PostsAPI from '../api/post';
 import * as CommentsAPI from '../api/comment';
 import * as CategoriesAPI from '../api/category';
+import history from '../history'
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
 export const RECEIVE_CURRENT_POST = 'RECEIVE_CURRENT_POST';
+export const RECEIVE_EDIT_POST = 'RECEIVE_EDIT_POST';
 export const SET_POST_SORT_FIELD = 'SET_POST_SORT_FIELD';
 export const SET_POST_SORT_DIRECTION = 'SET_POST_SORT_DIRECTION';
 export const SET_COMMENT_SORT_FIELD = 'SET_COMMENT_SORT_FIELD';
 export const SET_COMMENT_SORT_DIRECTION = 'SET_COMMENT_SORT_DIRECTION';
 export const SET_VIEW_LOADING = 'SET_VIEW_LOADING';
+export const SET_EDIT_POST = 'SET_EDIT_POST';
 export const UPDATE_POST_VOTE_SCORE = 'UPDATE_POST_VOTE_SCORE';
 export const UPDATE_COMMENT_VOTE_SCORE = 'UPDATE_COMMENT_VOTE_SCORE';
+export const RESET_EDIT_POST = 'RESET_EDIT_POST';
 
 const receivePosts = posts => ({
     type: RECEIVE_POSTS,
     posts
+});
+
+const receiveEditPost = editPost => ({
+    type: RECEIVE_EDIT_POST,
+    ...editPost
 });
 
 const receiveCategories = categories => ({
@@ -29,6 +38,10 @@ const receiveCurrentPost = (post, comments) => ({
         post,
         comments
     }
+});
+
+const resetEditPost = () => ({
+    type: RESET_EDIT_POST
 });
 
 const setViewLoading = viewLoading => ({
@@ -67,6 +80,13 @@ export const loadCategoryViewContent = () => dispatch => {
         });
 };
 
+export const setEditPost = post => ({
+    type: SET_EDIT_POST,
+    post: {
+        ...post
+    }
+});
+
 const updatePostScore = post => ({
     type: UPDATE_POST_VOTE_SCORE,
     post
@@ -97,14 +117,47 @@ export const downVoteComment = (comment) => dispatch => {
         .then(updatedComment => dispatch(updateCommentScore(updatedComment)));
 };
 
+export const createPost = post => () => {
+    return PostsAPI.createPost(post)
+        .then(p => {
+            history.push(`/${p.category}/${p.id}`);
+        });
+};
+
+export const editPost = (postId, post) => () => {
+    return PostsAPI.editPost(postId, post)
+        .then(p => {
+            history.push(`/${p.category}/${p.id}`);
+        });
+};
+
 export const loadPostDetailsViewContent = (postId) => dispatch => {
     dispatch(setViewLoading(true));
 
     return Promise.all([PostsAPI.fetchPost(postId), CommentsAPI.fetchComments(postId)])
-      .then(result => {
-          dispatch(receiveCurrentPost(result[0], result[1]));
-          dispatch(setViewLoading(false));
-      });
+        .then(result => {
+            dispatch(receiveCurrentPost(result[0], result[1]));
+            dispatch(setViewLoading(false));
+        });
+};
+
+export const loadPostEditViewContent = postId => dispatch => {
+    dispatch(setViewLoading(true));
+    dispatch(resetEditPost());
+
+    if (postId) {
+        return Promise.all([PostsAPI.fetchPost(postId), fetchCategories()])
+            .then(result => {
+                dispatch(receiveEditPost({post: result[0], categories: result[1]}));
+                dispatch(setViewLoading(false));
+            });
+    }
+
+    return fetchCategories()
+        .then(categories => {
+            dispatch(receiveEditPost({categories}));
+            dispatch(setViewLoading(false));
+        });
 };
 
 const fetchPosts = () => {
@@ -118,6 +171,11 @@ const fetchPosts = () => {
                     return posts;
                 });
         });
+};
+
+export const deletePost = (postId) => () => {
+    return PostsAPI.deletePost(postId)
+        .then(() => history.push('/'));
 };
 
 const fetchCategories = () => {

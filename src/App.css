@@ -88,3 +88,27 @@
 .view-loading {
     display: none;
 }
+
+.form .form-group {
+    margin: 0 0 20px 0;
+}
+
+.post-actions {
+    padding: 0 0 0 5px;
+}
+
+.post-actions .post-action {
+    font-size: 0.65em;
+    color: #848d95;
+    padding: 0 3px 2px;
+    cursor: pointer;
+}
+
+.post-actions .post-action:hover {
+    color: #3b4045;
+}
+
+.post-actions .post-action a {
+    color: inherit;
+    text-decoration: none;
+}

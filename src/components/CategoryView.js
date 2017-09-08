@@ -5,6 +5,8 @@ import PostList from "./PostList";
 import PropTypes from 'prop-types';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import sortBy from 'sort-by';
 
 class CategoryView extends Component {
@@ -30,15 +32,23 @@ class CategoryView extends Component {
                              primaryText={category.name}/>;
         });
 
-        const { category } = this.props.match.params;
+        const {category} = this.props.match.params;
+
+        const style = {
+            position: 'fixed',
+            marginRight: 20,
+            marginBottom: 20,
+            right: 0,
+            bottom: 0
+        };
 
         return (
             <div className="view view-category">
                 <div className="view-controls-container">
                     <div className="view-controls view-controls-categories">
                         <SelectField value={category || ''} floatingLabelText="Category"
-                                    onChange={this.handleCategory}>
-                            <MenuItem value={''} primaryText="" />
+                                     onChange={this.handleCategory}>
+                            <MenuItem value={''} primaryText=""/>
                             {categories}
                         </SelectField>
                     </div>
@@ -56,15 +66,18 @@ class CategoryView extends Component {
                     </div>
                 </div>
                 <PostList posts={this.props.posts}/>
+                <FloatingActionButton style={style} onClick={() => this.props.history.push('/posts/new')}>
+                    <ContentAdd/>
+                </FloatingActionButton>
             </div>
         );
     }
 }
 
 const mapStateToProps = (state, props) => {
-    const { match } = props;
+    const {match} = props;
     const sortField = state.ui.postSortField,
-          sortDirection = state.ui.postSortDirection;
+        sortDirection = state.ui.postSortDirection;
 
     let posts = [...state.posts];
 

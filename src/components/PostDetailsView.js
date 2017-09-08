@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import * as actions from '../actions';
 import PostByLine from './PostByLine';
 import Comment from './Comment';
@@ -16,6 +17,10 @@ class PostDetailsView extends Component {
         this.props.setSortDirection(value);
     };
 
+    handleDelete = () => {
+      this.props.deletePost(this.props.currentPost.post.id);
+    };
+
     componentDidMount() {
         this.props.fetchPost(this.props.match.params.postId);
     }
@@ -28,6 +33,12 @@ class PostDetailsView extends Component {
                 <div className="post-details">
                     <h1 className="mdc-typography--title">
                         {post.title}
+                        <span className="post-actions">
+                            <span className="post-action">
+                                <Link to={`/posts/${post.id}/edit`}>edit</Link>
+                            </span>
+                            <span className="post-action" onClick={this.handleDelete}>delete</span>
+                        </span>
                     </h1>
                     <PostByLine post={post} commentsCount={comments.length}/>
                     <div className="mdc-typography--body1">
@@ -80,7 +91,8 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchPost: (postId) => dispatch(actions.loadPostDetailsViewContent(postId)),
         setSortField: (field) => dispatch(actions.setCommentSortField(field)),
-        setSortDirection: (direction) => dispatch(actions.setCommentSortDirection(direction))
+        setSortDirection: (direction) => dispatch(actions.setCommentSortDirection(direction)),
+        deletePost: postId => dispatch(actions.deletePost(postId))
     };
 };
 

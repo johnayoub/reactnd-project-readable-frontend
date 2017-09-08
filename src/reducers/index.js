@@ -9,6 +9,16 @@ const UI_INITIAL_STATE = {
     viewLoading: false
 };
 
+const EDIT_POST_INITIAL_STATE = {
+  categories: [],
+  post: {
+      title: '',
+      author: '',
+      body: '',
+      category: ''
+  }
+};
+
 function updateItemVoteScore(item, voteScore) {
     return {
         ...item,
@@ -72,6 +82,28 @@ function categories(state = [], action) {
     }
 }
 
+function editPost(state = EDIT_POST_INITIAL_STATE, action) {
+    switch(action.type) {
+        case actions.RECEIVE_EDIT_POST:
+            return {
+                categories: action.categories || state.categories,
+                post: action.post || state.post
+            };
+        case actions.SET_EDIT_POST:
+            return {
+                ...state,
+                post: {
+                    ...state.post,
+                    ...action.post
+                }
+            };
+        case actions.RESET_EDIT_POST:
+            return EDIT_POST_INITIAL_STATE;
+        default:
+            return state;
+    }
+}
+
 function ui(state = UI_INITIAL_STATE, action) {
     switch(action.type) {
         case actions.SET_POST_SORT_FIELD:
@@ -107,6 +139,7 @@ function ui(state = UI_INITIAL_STATE, action) {
 const reducer = combineReducers({
     posts,
     currentPost,
+    editPost,
     categories,
     ui
 });

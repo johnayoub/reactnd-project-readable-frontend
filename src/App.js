@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './components/Header';
 import CategoryView from "./components/CategoryView";
 import PostDetailsView from './components/PostDetailsView';
-// import PostEditView from './components/PostEditView';
+import PostEditView from './components/PostEditView';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -43,10 +43,10 @@ class App extends Component {
                                 style={style.refresh}
                             />
                         </div>
-                        <div className={viewLoading ? "view-loading" : ""}>
+                        <div className={viewLoading ? "view-loading" : null}>
                             <Switch>
-                                {/*<Route exact path="/posts/new" component={PostEditView}/>*/}
-                                {/*<Route exact path="/posts/:postId/edit" component={PostEditView}/>*/}
+                                <Route exact path="/posts/new" component={PostEditView}/>
+                                <Route exact path="/posts/:postId/edit" component={PostEditView}/>
                                 <Route exact path="/:category/:postId" component={PostDetailsView}/>
                                 <Route exact path="/:category?" component={CategoryView}/>
                             </Switch>
