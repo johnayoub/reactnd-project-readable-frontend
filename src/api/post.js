@@ -28,7 +28,8 @@ export function fetchPosts(category = '') {
         headers: {
             ...authHeader
         }
-    }).then(res => res.json());
+    }).then(res => res.json())
+        .then(posts => posts.filter(post => !post.deleted));
 }
 
 export function updateVoteScore(postId, voteOption) {
