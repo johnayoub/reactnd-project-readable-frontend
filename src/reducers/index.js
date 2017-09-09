@@ -3,9 +3,9 @@ import * as actions from '../actions';
 
 const UI_INITIAL_STATE = {
     postSortField: 'voteScore',
-    postSortDirection: 'asc',
+    postSortDirection: 'desc',
     commentSortField: 'voteScore',
-    commentSortDirection: 'asc',
+    commentSortDirection: 'desc',
     viewLoading: false
 };
 
