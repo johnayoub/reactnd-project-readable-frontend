@@ -29,6 +29,19 @@ class PostEditView extends Component {
         });
     };
 
+    handleCancel = () => {
+        const { post } = this.props;
+
+      if (this.postId) {
+          this.props.history.push(`/${post.category}/${post.id}`);
+
+          return;
+      }
+
+      this.props.history.push('/');
+
+    };
+
     handleSubmit = event => {
         // TODO: validateFirst
 
@@ -67,6 +80,8 @@ class PostEditView extends Component {
                         ))}
                     </SelectField>
                 </div>
+                <RaisedButton label="Cancel" onClick={this.handleCancel} style={{marginRight: 10}}/>
+                {' '}
                 <RaisedButton label={this.postId ? "Update" : "Create"} primary={true}
                               onClick={this.handleSubmit}/>
             </form>
