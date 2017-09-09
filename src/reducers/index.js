@@ -10,13 +10,19 @@ const UI_INITIAL_STATE = {
 };
 
 const EDIT_POST_INITIAL_STATE = {
-  categories: [],
-  post: {
-      title: '',
-      author: '',
-      body: '',
-      category: ''
-  }
+    categories: [],
+    post: {
+        title: '',
+        author: '',
+        body: '',
+        category: ''
+    },
+    errors: {
+        title: '',
+        author: '',
+        body: '',
+        category: ''
+    }
 };
 
 function updateItemVoteScore(item, voteScore) {
@@ -83,9 +89,10 @@ function categories(state = [], action) {
 }
 
 function editPost(state = EDIT_POST_INITIAL_STATE, action) {
-    switch(action.type) {
+    switch (action.type) {
         case actions.RECEIVE_EDIT_POST:
             return {
+                ...state,
                 categories: action.categories || state.categories,
                 post: action.post || state.post
             };
@@ -97,6 +104,14 @@ function editPost(state = EDIT_POST_INITIAL_STATE, action) {
                     ...action.post
                 }
             };
+        case actions.SET_EDIT_POST_ERRORS:
+            return {
+                ...state,
+                errors: {
+                    ...state.errors,
+                    ...action.errors
+                }
+            };
         case actions.RESET_EDIT_POST:
             return EDIT_POST_INITIAL_STATE;
         default:
@@ -105,7 +120,7 @@ function editPost(state = EDIT_POST_INITIAL_STATE, action) {
 }
 
 function ui(state = UI_INITIAL_STATE, action) {
-    switch(action.type) {
+    switch (action.type) {
         case actions.SET_POST_SORT_FIELD:
             return {
                 ...state,

@@ -13,6 +13,7 @@ export const SET_COMMENT_SORT_FIELD = 'SET_COMMENT_SORT_FIELD';
 export const SET_COMMENT_SORT_DIRECTION = 'SET_COMMENT_SORT_DIRECTION';
 export const SET_VIEW_LOADING = 'SET_VIEW_LOADING';
 export const SET_EDIT_POST = 'SET_EDIT_POST';
+export const SET_EDIT_POST_ERRORS = 'SET_EDIT_POST_ERRORS';
 export const UPDATE_POST_VOTE_SCORE = 'UPDATE_POST_VOTE_SCORE';
 export const UPDATE_COMMENT_VOTE_SCORE = 'UPDATE_COMMENT_VOTE_SCORE';
 export const RESET_EDIT_POST = 'RESET_EDIT_POST';
@@ -67,6 +68,16 @@ export const setCommentSortField = field => ({
 export const setCommentSortDirection = direction => ({
     type: SET_COMMENT_SORT_DIRECTION,
     direction
+});
+
+export const setEditPostError = errors => ({
+    type: SET_EDIT_POST_ERRORS,
+    errors: errors.reduce((ac, value) => {
+        return {
+            ...ac,
+            ...value
+        };
+    }, {})
 });
 
 export const loadCategoryViewContent = () => dispatch => {
