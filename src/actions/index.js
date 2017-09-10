@@ -17,6 +17,7 @@ export const SET_EDIT_POST_ERRORS = 'SET_EDIT_POST_ERRORS';
 export const UPDATE_POST_VOTE_SCORE = 'UPDATE_POST_VOTE_SCORE';
 export const UPDATE_COMMENT_VOTE_SCORE = 'UPDATE_COMMENT_VOTE_SCORE';
 export const RESET_EDIT_POST = 'RESET_EDIT_POST';
+export const REMOVE_POST_COMMENT = 'REMOVE_POST_COMMENT';
 
 const receivePosts = posts => ({
     type: RECEIVE_POSTS,
@@ -68,6 +69,11 @@ export const setCommentSortField = field => ({
 export const setCommentSortDirection = direction => ({
     type: SET_COMMENT_SORT_DIRECTION,
     direction
+});
+
+export const removePostComment = commentId => ({
+    type: REMOVE_POST_COMMENT,
+    commentId
 });
 
 export const setEditPostError = errors => ({
@@ -187,6 +193,13 @@ const fetchPosts = () => {
 export const deletePost = (postId) => () => {
     return PostsAPI.deletePost(postId)
         .then(() => history.push('/'));
+};
+
+export const deleteComment = (commentId) => dispatch => {
+    return CommentsAPI.deleteComment(commentId)
+        .then(() => {
+            dispatch(removePostComment(commentId));
+        });
 };
 
 const fetchCategories = () => {

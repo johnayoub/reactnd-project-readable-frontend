@@ -74,6 +74,11 @@ function currentPost(state = {post: {}, comments: []}, action) {
                     return updateItemVoteScore(comment, action.comment.voteScore);
                 })
             };
+        case actions.REMOVE_POST_COMMENT:
+            return {
+                ...state,
+                comments: state.comments.filter(comment => comment.id !== action.commentId)
+            };
         default:
             return state;
     }

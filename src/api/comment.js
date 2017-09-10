@@ -5,7 +5,17 @@ export function fetchComments(postId) {
         headers: {
             ...authHeader
         }
-    }).then(res => res.json());
+    }).then(res => res.json())
+         .then(comments => comments.filter(comment => !comment.deleted));
+}
+
+export function deleteComment(commentId) {
+    return fetch(`${baseUrl}/comments/${commentId}`, {
+        method: 'DELETE',
+        headers: {
+            ...authHeader
+        }
+    });
 }
 
 export function updateVoteScore(commentId, voteOption) {

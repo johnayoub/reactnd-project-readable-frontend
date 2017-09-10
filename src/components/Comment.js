@@ -7,11 +7,15 @@ import { connect } from 'react-redux';
 
 class Comment extends Component {
     handleUpVote = () => {
-        this.props.upVotePost(this.props.comment);
+        this.props.upVoteComment(this.props.comment);
     };
 
     handleDownVote = () => {
-        this.props.downVotePost(this.props.comment);
+        this.props.downVoteComment(this.props.comment);
+    };
+
+    handleDelete = () => {
+        this.props.deleteComment(this.props.comment.id);
     };
 
     render() {
@@ -26,6 +30,11 @@ class Comment extends Component {
             <div className="comment">
                 <div className="mdc-typography--body1">
                     {comment.body}
+                    <span className="comment-actions">
+                            <span className="comment-action">
+                            </span>
+                            <span className="comment-action" onClick={this.handleDelete}>delete</span>
+                        </span>
                 </div>
                 <div className="mdc-typography--caption">
                     {comment.voteScore} {' '}
@@ -47,8 +56,9 @@ class Comment extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        upVotePost: post => dispatch(actions.upVoteComment(post)),
-        downVotePost: post => dispatch(actions.downVoteComment(post))
+        upVoteComment: comment => dispatch(actions.upVoteComment(comment)),
+        downVoteComment: comment => dispatch(actions.downVoteComment(comment)),
+        deleteComment: commentId => dispatch(actions.deleteComment(commentId))
     };
 };
 
