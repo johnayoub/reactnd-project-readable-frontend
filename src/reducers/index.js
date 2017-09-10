@@ -77,6 +77,11 @@ function currentPost(state = {post: {}, comments: []}, action) {
                 ...state,
                 comments: state.comments.filter(comment => comment.id !== action.commentId)
             };
+        case actions.ADD_POST_COMMENT:
+            return {
+                ...state,
+                comments: [...state.comments, action.comment]
+            };
         default:
             return state;
     }

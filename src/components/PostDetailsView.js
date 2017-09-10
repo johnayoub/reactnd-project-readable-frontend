@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import * as actions from '../actions';
 import PostByLine from './PostByLine';
 import Comment from './Comment';
+import AddComment from './AddComment';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import sortBy from 'sort-by';
@@ -18,7 +19,7 @@ class PostDetailsView extends Component {
     };
 
     handleDelete = () => {
-      this.props.deletePost(this.props.currentPost.post.id);
+        this.props.deletePost(this.props.currentPost.post.id);
     };
 
     componentDidMount() {
@@ -60,10 +61,12 @@ class PostDetailsView extends Component {
                             </SelectField>
                         </div>
                     </div>
-                    {comments.map(comment => (
-                        <Comment key={comment.id} comment={comment}/>
-                    ))}
+                    {comments.length === 0 ? <div>No comments :(</div>
+                        : comments.map(comment => (
+                            <Comment key={comment.id} comment={comment}/>
+                        ))}
                 </div>
+                <AddComment postId={post.id}/>
             </div>
         );
     }
@@ -71,7 +74,7 @@ class PostDetailsView extends Component {
 
 const mapStateToProps = state => {
     const sortField = state.ui.commentSortField,
-          sortDirection = state.ui.commentSortDirection;
+        sortDirection = state.ui.commentSortDirection;
 
     const comments = [...state.currentPost.comments];
 

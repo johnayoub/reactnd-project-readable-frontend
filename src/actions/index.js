@@ -3,6 +3,7 @@ import * as CommentsAPI from '../api/comment';
 import * as CategoriesAPI from '../api/category';
 import history from '../history'
 
+export const ADD_POST_COMMENT = 'ADD_POST_COMMENT';
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES';
 export const RECEIVE_CURRENT_POST = 'RECEIVE_CURRENT_POST';
@@ -69,6 +70,11 @@ export const setCommentSortField = field => ({
 export const setCommentSortDirection = direction => ({
     type: SET_COMMENT_SORT_DIRECTION,
     direction
+});
+
+export const addPostComment = comment => ({
+    type: ADD_POST_COMMENT,
+    comment
 });
 
 export const removePostComment = commentId => ({
@@ -138,6 +144,14 @@ export const createPost = post => () => {
     return PostsAPI.createPost(post)
         .then(p => {
             history.push(`/${p.category}/${p.id}`);
+        });
+};
+
+export const createComment = (postId, input) => dispatch => {
+    return CommentsAPI.createComment(postId, input.getValue())
+        .then(comment => {
+            dispatch(addPostComment(comment));
+            input.setValue('');
         });
 };
 

@@ -1,4 +1,5 @@
 import { authHeader, baseUrl } from "./apiCommon";
+import { generateId } from './idGenerator';
 
 export function fetchComments(postId) {
      return fetch(`${baseUrl}/posts/${postId}/comments`, {
@@ -16,6 +17,25 @@ export function deleteComment(commentId) {
             ...authHeader
         }
     });
+}
+
+export function createComment(postId, commentText) {
+    const  comment = {
+        id: generateId(),
+        timestamp: Date.now(),
+        author: 'anonymous',
+        body: commentText,
+        parentId: postId
+    };
+
+    return fetch(`${baseUrl}/comments`, {
+        method: 'POST',
+        headers: {
+            ...authHeader,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(comment)
+    }).then(result => result.json());
 }
 
 export function updateVoteScore(commentId, voteOption) {
