@@ -24,8 +24,12 @@ export function updateVoteScore(postId, voteOption) {
 }
 
 export function createPost(post) {
-    post.timestamp = Date.now();
-    post.id = generateId();
+    post = {
+        ...post,
+        id: generateId(),
+        timestamp: Date.now(),
+        author: 'anonymous'
+    };
 
     return fetch(`${baseUrl}/posts`, {
         method: 'POST',

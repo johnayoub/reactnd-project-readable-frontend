@@ -110,10 +110,6 @@ class PostEditView extends Component {
                                value={post.body} errorText={errors.body}/>
                 </div>
                 <div className="form-group">
-                    <TextField floatingLabelText="Author" name="author" onChange={this.handleTextFieldChange}
-                               value={post.author} errorText={errors.author}/>
-                </div>
-                <div className="form-group">
                     <SelectField floatingLabelText="Category" value={post.category}
                                  onChange={this.handleSelectChange}
                                  errorText={errors.category}>

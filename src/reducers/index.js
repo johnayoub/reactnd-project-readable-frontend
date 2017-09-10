@@ -13,13 +13,11 @@ const EDIT_POST_INITIAL_STATE = {
     categories: [],
     post: {
         title: '',
-        author: '',
         body: '',
         category: ''
     },
     errors: {
         title: '',
-        author: '',
         body: '',
         category: ''
     }
