@@ -1,25 +1,5 @@
 import { authHeader, baseUrl } from "./apiCommon";
-
-const generateRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-
-const generatePostId = () => {
-    const keyLength = 22;
-    let key = '';
-
-    const keyChars = [
-        ...Array.from(Array(10).keys()).map(x => x + 48),
-        ...Array.from(Array(26).keys()).map(x => x + 65),
-        ...Array.from(Array(26).keys()).map(x => x + 97)
-    ];
-
-    for (let i = 0; i < keyLength; i++) {
-        const randomNumber = generateRandomNumber(0, keyChars.length - 1);
-
-        key += String.fromCharCode(keyChars[randomNumber]);
-    }
-
-    return key;
-};
+import { generateId } from './idGenerator';
 
 export function fetchPosts(category = '') {
     const url = category ? `${baseUrl}/${category}/posts` : `${baseUrl}/posts`;
@@ -45,7 +25,7 @@ export function updateVoteScore(postId, voteOption) {
 
 export function createPost(post) {
     post.timestamp = Date.now();
-    post.id = generatePostId();
+    post.id = generateId();
 
     return fetch(`${baseUrl}/posts`, {
         method: 'POST',
