@@ -187,7 +187,15 @@ export const loadPostDetailsViewContent = (postId) => dispatch => {
 
     return Promise.all([PostsAPI.fetchPost(postId), CommentsAPI.fetchComments(postId)])
         .then(result => {
-            dispatch(receiveCurrentPost(result[0], result[1]));
+            const [post, comments] = result;
+
+            if (Object.keys(post).length !== 0) {
+                dispatch(receiveCurrentPost(post, comments));
+            }
+            else {
+                history.replace('/');
+            }
+
             dispatch(setViewLoading(false));
         });
 };
