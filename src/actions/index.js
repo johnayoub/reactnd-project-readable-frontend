@@ -15,8 +15,10 @@ export const SET_COMMENT_SORT_DIRECTION = 'SET_COMMENT_SORT_DIRECTION';
 export const SET_VIEW_LOADING = 'SET_VIEW_LOADING';
 export const SET_EDIT_POST = 'SET_EDIT_POST';
 export const SET_EDIT_POST_ERRORS = 'SET_EDIT_POST_ERRORS';
+export const SET_COMMENT_TO_EDIT = 'SET_COMMENT_TO_EDIT';
 export const UPDATE_POST_VOTE_SCORE = 'UPDATE_POST_VOTE_SCORE';
 export const UPDATE_COMMENT_VOTE_SCORE = 'UPDATE_COMMENT_VOTE_SCORE';
+export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const RESET_EDIT_POST = 'RESET_EDIT_POST';
 export const REMOVE_POST_COMMENT = 'REMOVE_POST_COMMENT';
 
@@ -92,6 +94,16 @@ export const setEditPostError = errors => ({
     }, {})
 });
 
+export const setCommentToEdit = commentId => ({
+    type: SET_COMMENT_TO_EDIT,
+    commentId
+});
+
+export const updateComment = comment => ({
+    type: UPDATE_COMMENT,
+    comment
+});
+
 export const loadCategoryViewContent = () => dispatch => {
     dispatch(setViewLoading(true));
 
@@ -159,6 +171,14 @@ export const editPost = (postId, post) => () => {
     return PostsAPI.editPost(postId, {title: post.title, body: post.body})
         .then(p => {
             history.push(`/${p.category}/${p.id}`);
+        });
+};
+
+export const editComment = comment => dispatch => {
+    return CommentsAPI.editComment(comment.id, {body: comment.body})
+        .then(c => {
+            dispatch(setCommentToEdit(null));
+            dispatch(updateComment(c));
         });
 };
 

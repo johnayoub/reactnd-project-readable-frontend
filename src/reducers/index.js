@@ -23,6 +23,12 @@ const EDIT_POST_INITIAL_STATE = {
     }
 };
 
+const CURRENT_POST_INITIAL_STATE = {
+    post: {},
+    comments: [],
+    commentToEdit: null
+};
+
 function updateItemVoteScore(item, voteScore) {
     return {
         ...item,
@@ -48,7 +54,7 @@ function posts(state = [], action) {
     }
 }
 
-function currentPost(state = {post: {}, comments: []}, action) {
+function currentPost(state = CURRENT_POST_INITIAL_STATE, action) {
     switch (action.type) {
         case actions.RECEIVE_CURRENT_POST:
             return action.currentPost;
@@ -81,6 +87,16 @@ function currentPost(state = {post: {}, comments: []}, action) {
             return {
                 ...state,
                 comments: [...state.comments, action.comment]
+            };
+        case actions.SET_COMMENT_TO_EDIT:
+            return {
+                ...state,
+                commentToEdit: action.commentId
+            };
+        case actions.UPDATE_COMMENT:
+            return {
+                ...state,
+                comments: [...state.comments.filter(c => c.id !== action.comment.id), action.comment]
             };
         default:
             return state;

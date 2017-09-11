@@ -38,6 +38,19 @@ export function createComment(postId, commentText) {
     }).then(result => result.json());
 }
 
+export function editComment(commentId, comment) {
+    comment.timestamp = Date.now();
+
+    return fetch(`${baseUrl}/comments/${commentId}`, {
+        method: 'PUT',
+        headers: {
+            ...authHeader,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(comment)
+    }).then(result => result.json());
+}
+
 export function updateVoteScore(commentId, voteOption) {
     return fetch(`${baseUrl}/comments/${commentId}`, {
         method: 'POST',

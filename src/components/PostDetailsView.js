@@ -27,7 +27,7 @@ class PostDetailsView extends Component {
     }
 
     render() {
-        const {post, comments} = this.props.currentPost;
+        const {post, comments, commentToEdit} = this.props.currentPost;
 
         return (
             <div className="view view-post-details">
@@ -63,7 +63,8 @@ class PostDetailsView extends Component {
                     </div>
                     {comments.length === 0 ? <div>No comments :(</div>
                         : comments.map(comment => (
-                            <Comment key={comment.id} comment={comment}/>
+                            <Comment key={comment.id} comment={comment}
+                                     edit={commentToEdit === comment.id}/>
                         ))}
                 </div>
                 <AddComment postId={post.id}/>
