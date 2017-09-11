@@ -156,7 +156,7 @@ export const createComment = (postId, input) => dispatch => {
 };
 
 export const editPost = (postId, post) => () => {
-    return PostsAPI.editPost(postId, post)
+    return PostsAPI.editPost(postId, {title: post.title, body: post.body})
         .then(p => {
             history.push(`/${p.category}/${p.id}`);
         });
